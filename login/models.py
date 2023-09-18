@@ -1,4 +1,6 @@
 from django.db import models
+import random
+import string
 
 class Apartment(models.Model):
     apartment_id = models.AutoField(primary_key=True)
@@ -8,21 +10,15 @@ class Apartment(models.Model):
         return self.number
 
 class Neighbor(models.Model):
-    neighbor_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-    age = models.PositiveIntegerField()
-    GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('O', 'Other'),
-    )
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=15)
-    email = models.EmailField(unique=True)
+    neighbor_id = models.CharField(max_length=8, unique=True, blank=True, null=True)
 
-    def __str__(self):
-        return self.name
+    def generate_neighbor_id(self):
+        while True:
+            neighbor_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+            if not Neighbor.objects.filter(neighbor_id=neighbor_id).exists():
+                self.neighbor_id = neighbor_id
+                self.save()
+                break
 
 class Neighborhood(models.Model):
     neighbors = models.ManyToManyField(Neighbor)
