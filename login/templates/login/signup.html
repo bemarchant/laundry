@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>signup</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'login/css/styles.css' %}">
+</head>
+<body>
+    <h2>👋🏽 Hola vecin@</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-container">
+            <div class="form-row"><label>{{ "👤 nombre" }}</label>{{ form.name }}</div>
+            <div class="form-row"><label>{{ "👤 usuario" }}</label>{{ form.username }}</div>
+            <div class="form-row"><label>{{ "🔑 contraseña" }}</label>{{ form.password1 }}</div>
+            <div class="form-row"><label>{{ "🔑 contraseña" }}</label>{{ form.password2 }}</div>
+            <div class="form-row"><label>{{ "👽 genero" }}</label>{{ form.gender }}</div>
+            <div class="form-row"><label>{{ "📱 celular" }}</label>{{ form.phone }}</div>
+            <div class="form-row"><label>{{ "⏳ edad" }}</label>{{ form.age }}</div>
+            <div class="form-row"><label>{{ "🚪 depto." }}</label>{{ form.apartment }}</div>
+        </div>
+        
+        {% if form.password1.errors %}
+        <div class="error">
+            {% for error in form.password1.errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <input type="submit" value="ok">
+    </form>
+</body>
+</html>

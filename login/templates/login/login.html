@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'login/css/styles.css' %}">
+
+</head>
+<body>
+    <h2>👋🏽 Hola vecin@</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-container">
+            <div class="form-row"><label>{{ "👤 usuario" }}</label>{{ form.username }}</div>
+            <div class="form-row"><label>{{ "🔑 contraseña" }}</label>{{ form.password }}</div>
+        </div>
+
+        <input type="submit" value="ok">
+    </form>
+</body>
+</html>

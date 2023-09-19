@@ -1,0 +1,18 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>signup</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'login/css/styles.css' %}">
+</head>
+<body>
+    <h2>👋🏽 Bienvenido </h2>
+    
+    <form method="post" action="{% url 'neighbor_logout' %}">
+        {% csrf_token %}
+        <button type="submit">salir</button>
+    </form>
+
+</body>
+</html>
