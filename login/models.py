@@ -29,6 +29,6 @@ class Neighbor(AbstractUser):
 
 class Neighborhood(models.Model):
     neighbors = models.ManyToManyField(Neighbor)
-
+    
     def __str__(self):
         return "Neighborhood"
