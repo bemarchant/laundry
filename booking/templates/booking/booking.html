@@ -4,7 +4,7 @@
   <head>
       <title>login</title>
       <link rel="stylesheet" type="text/css" href="{% static 'login/css/styles.css' %}">
-
+      <script src="{% static 'booking/script.js' %}"></script>
   </head>
   <div class="form-container">
     <h2>Agenda una máquina</h2>
@@ -14,23 +14,28 @@
       <div class="form-container">
         <div class="form-row">
           <label for="date">Cuando?:</label>
-          <input type="date" name="date" id="date" required>
+          <label>Hoy</label>
         </div>
     
         <div class="form-row">
-          <label for="slot">En que bloque?:</label>
-          <select name="slot" id="slot" required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
+          <label for="slot">Qué máquina?:</label>
+          <select name="machine" id="machine" required>
+            {% for m  in machine%}<option>{{ m }}</option>{% endfor %}
           </select>
         </div>
+        
+        <div class="form-row">
+          <label for="slot">Qué bloque?:</label>
+          <select name="slot" id="slot" required> <!-- JavaScript --> </select>
+        </div>
+
+        <div class="form-row">
+          <button type="submit">agendar</button>
+        </div>
+
       </div>
 
-      <div class="form-row">
-        <!-- <input type="hidden" name="machine" value="{{ machine.id }}"> -->
-        <button type="submit">agendar</button>
-      </div>
+    </div>
     </form>
   </div>
 </html>

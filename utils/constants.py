@@ -1,1 +1,1 @@
-SLOTS = ['slot1', 'slot2', 'slot3','slot4']
+SLOT_AVAILABLE = [False, True, True, True]
