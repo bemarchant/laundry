@@ -8,7 +8,6 @@ from .forms import NeighborSignupForm, NeighborLoginForm
 @csrf_protect
 
 def neighbor_login(request):
-    
     if request.method == 'POST':
         form = NeighborLoginForm(request.POST)
         if form.is_valid():
@@ -18,18 +17,18 @@ def neighbor_login(request):
             if user is not None:
                 login(request, user)
                 return render(request, 'login/welcome.html')
-                form.add_error(None, 'Invalid login credentials')
     else:
         form = NeighborLoginForm()
 
     return render(request, 'login/login.html', {'form': form})
 
 def neighbor_logout(request):
+    form = NeighborLoginForm()
     logout(request)
-    return redirect('neighbor_login')
+    
+    return render(request, 'login/login.html', {'form': form})
 
 def neighbor_signup(request):
-    
     if request.method == 'POST':
         form = NeighborSignupForm(request.POST)
         if form.is_valid():
@@ -51,4 +50,5 @@ def neighbor_signup(request):
 
 
 def neighbor_welcome(request):
+    print(request.user)
     return render(request, 'login/welcome.html')

@@ -9,6 +9,7 @@ media
 # Backup files # 
 *.bak 
 
+<<<<<<< HEAD
 # If you are using PyCharm # 
 # User-specific stuff
 .idea/**/workspace.xml
@@ -23,6 +24,8 @@ media
 # Generated files
 .idea/**/contentModel.xml
 
+=======
+>>>>>>> feature/booking_logic
 # Sensitive or high-churn files
 .idea/**/dataSources/
 .idea/**/dataSources.ids
@@ -134,4 +137,8 @@ GitHub.sublime-settings
 !.vscode/tasks.json 
 !.vscode/launch.json 
 !.vscode/extensions.json 
+<<<<<<< HEAD
 .history
+=======
+.history
+>>>>>>> feature/booking_logic
