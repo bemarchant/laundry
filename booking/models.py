@@ -12,12 +12,8 @@ class Machine(models.Model):
         pass
 
 class Booking(models.Model):
-    print(f'########### New booking')
     today = date.today()
-    print(f'########### On {today}')
-
     neighbor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    print(f'########### By {neighbor.name}')
     machine = models.ForeignKey(Machine, on_delete=models.CASCADE, default="1")
     date = models.DateField()
     slot = models.CharField(max_length=10, default="1")

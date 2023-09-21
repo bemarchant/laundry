@@ -11,10 +11,15 @@ def neighbor_login(request):
     if request.method == 'POST':
         form = NeighborLoginForm(request.POST)
         if form.is_valid():
+            
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
+
+            print(username)
             user = authenticate(request, username=username, password=password)
+            
             if user is not None:
+                print(username)
                 login(request, user)
                 return render(request, 'login/welcome.html')
     else:

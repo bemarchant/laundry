@@ -1,33 +1,36 @@
 {% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>login</title>
+      <link rel="stylesheet" type="text/css" href="{% static 'login/css/styles.css' %}">
 
-<div class="form-container">
-  <h2>Agenda una máquina</h2>
+  </head>
+  <div class="form-container">
+    <h2>Agenda una máquina</h2>
 
-  <form method="post">
-    {% csrf_token %}
-    {% if error_message %}
-    <div class="error">
-      {{ error_message }}
-    </div>
-    {% endif %}
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-container">
+        <div class="form-row">
+          <label for="date">Cuando?:</label>
+          <input type="date" name="date" id="date" required>
+        </div>
+    
+        <div class="form-row">
+          <label for="slot">En que bloque?:</label>
+          <select name="slot" id="slot" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+      </div>
 
-    <div class="form-row">
-      <label for="date">Select Date:</label>
-      <input type="date" name="date" id="date" required>
-    </div>
-
-    <div class="form-row">
-      <label for="slot">Select Slot:</label>
-      <select name="slot" id="slot" required>
-        <option value="10:00 AM">10:00 AM</option>
-        <option value="11:00 AM">11:00 AM</option>
-        <option value="12:00 PM">12:00 PM</option>
-      </select>
-    </div>
-
-    <div class="form-row">
-      <!-- <input type="hidden" name="machine" value="{{ machine.id }}"> -->
-      <button type="submit">agendar</button>
-    </div>
-  </form>
-</div>
+      <div class="form-row">
+        <!-- <input type="hidden" name="machine" value="{{ machine.id }}"> -->
+        <button type="submit">agendar</button>
+      </div>
+    </form>
+  </div>
+</html>
