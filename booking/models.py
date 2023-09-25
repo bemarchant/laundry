@@ -1,11 +1,10 @@
 from django.conf import settings
 from django.db import models
-from datetime import date
 from utils import constants
         
 class Machine(models.Model):
     name = models.CharField(max_length=1)
-    slots = constants.SLOT_AVAILABLE
+    slots = models.JSONField(default=constants.default_slot_status)
 
     def __str__(self):
         return self.name
@@ -19,17 +18,21 @@ class Machine(models.Model):
     def booked_slot(self, slot_pos):
         if self.slots[slot_pos]: 
             self.slots[slot_pos] = False
+            self.save()
             return
+        
         self.slots[slot_pos] = True
+        self.save()
         return
 
 class Booking(models.Model):
-    today = date.today()
-    
-    neighbor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    machine = models.ForeignKey(Machine, on_delete=models.CASCADE)
+    neighbor = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    machine = models.OneToOneField(Machine, on_delete=models.CASCADE)
 
+    def get_machine_slots(self):
+        return self.machine.slots
+    
     def __str__(self):
-        return f"{self.neighbor.neighbor} - {self.machine}"
+        return self.name
 
 

@@ -1,1 +1,4 @@
-SLOT_AVAILABLE = [False, True, True, True]
+SLOT_AVAILABLE = [True, True, True, True]
+
+def default_slot_status():
+    return SLOT_AVAILABLE.copy()
