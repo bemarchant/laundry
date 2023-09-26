@@ -3,8 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var slotSelect = document.getElementById("slot");
 
   function populateSlotSelect() {
-    print("u r in populateSlotSelect");
-
     var selectedMachine = machineSelect.value;
     slotSelect.innerHTML = "";
 
