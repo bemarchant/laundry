@@ -6,7 +6,6 @@ from datetime import date
 
 def booking_status(request):
     today = date.today()
-    print(Booking.objects.count())
     pass
 
 def booking(request):
