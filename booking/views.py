@@ -10,7 +10,6 @@ def booking_status(request):
     pass
 
 def booking(request):
-    print('u are trying to book')
     machine = Machine.objects.all()
     neighbor = request.user
 
@@ -26,11 +25,9 @@ def booking(request):
         existing_booking = Booking.objects.filter(neighbor=request.user).first()
     
         if existing_booking:
-            print('existing_booking')
             existing_booking.machine = selected_machine
             existing_booking.save()
         else:
-            print('not existing_booking')
             booking = Booking(neighbor=request.user, machine=selected_machine)
             booking.save()
 
@@ -42,9 +39,7 @@ def get_available_slots(request, machine_id):
     try:
         machine = Machine.objects.get(name=machine_id)
         slot_available = machine.get_slot_status()
-        print(slot_available)
         return JsonResponse({'slot_available': slot_available})
     
     except Machine.DoesNotExist:
-    
         return JsonResponse({'error': 'Machine not found'})
