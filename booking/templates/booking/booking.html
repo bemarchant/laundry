@@ -6,17 +6,51 @@
       <link rel="stylesheet" type="text/css" href="{% static 'login/css/styles.css' %}">
       <script src="{% static 'booking/script.js' %}"></script>
   </head>
-  <div class="form-container">
-    <h2>Agenda una máquina</h2>
+
+  <div>
+    <h2>👋🏽 Bienvenido </h2>
 
     <form method="post">
       {% csrf_token %}
       <div class="form-container">
+        <label>{{neighbor.name}}</label>
+        <label>{{neighbor.apartment}}</label>
+        <label>{{neighbor.email}}</label>
+        <label>{{neighbor.phone}}</label>
         <div class="form-row">
-          <label for="date">Cuando?:</label>
-          <label>Hoy</label>
+          <button type="submit">editar</button>
         </div>
-    
+      </div>
+
+    </div>
+
+  <div>
+
+    <div>
+      <h2>📝 Tus reservas </h2>
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-container">
+          <div class="form-row">
+            <label>Máquina : </label>
+          </div>
+          <div class="form-row">
+            <label>Bloque : </label>
+          </div>
+        
+        <div class="form-row">
+          <button type="submit">cancelar</button>
+        </div>
+
+        </div>
+      </div>
+    <div>
+
+    <h2>🤖 Agenda una máquina</h2>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-container">    
         <div class="form-row">
           <label for="slot">Qué máquina?:</label>
           <select name="machine" id="machine" required>
@@ -35,6 +69,15 @@
 
       </div>
 
+      <div>
+        <h2>⚠️ Reporta un problema </h2>
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-container">
+          </div>
+        </div>
+      <div>
+  
     </div>
     </form>
   </div>
