@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => response.json())
       .then((data) => {
         var slotOptions = data.slot_available;
-
         for (var i = 0; i < slotOptions.length; i++) {
           var option = document.createElement("option");
           option.text = slotOptions[i];
@@ -25,5 +24,4 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   machineSelect.addEventListener("change", populateSlotSelect);
-  populateSlotSelect();
 });

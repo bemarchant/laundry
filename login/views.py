@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_protect
-from django.urls import reverse
 from .forms import NeighborSignupForm, NeighborLoginForm
 
 
@@ -14,24 +13,19 @@ def neighbor_login(request):
             
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-
-            print(username)
             user = authenticate(request, username=username, password=password)
             
             if user is not None:
-                print(username)
                 login(request, user)
-                return render(request, 'login/welcome.html')
+                return redirect('neighbor_welcome')
     else:
         form = NeighborLoginForm()
 
     return render(request, 'login/login.html', {'form': form})
 
 def neighbor_logout(request):
-    form = NeighborLoginForm()
     logout(request)
-    
-    return render(request, 'login/login.html', {'form': form})
+    return redirect('neighbor_login')
 
 def neighbor_signup(request):
     if request.method == 'POST':
@@ -55,5 +49,4 @@ def neighbor_signup(request):
 
 
 def neighbor_welcome(request):
-    print(request.user)
     return render(request, 'login/welcome.html')
