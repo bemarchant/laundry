@@ -6,7 +6,7 @@ from django.contrib.auth import password_validation
 class NeighborSignupForm(UserCreationForm):
     class Meta:
         model = Neighbor
-        fields = ['name','age', 'username','gender', 'apartment', 'phone', 'email']
+        fields = ['age', 'username','first_name','last_name','gender', 'apartment', 'phone', 'email']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -17,22 +17,29 @@ def booking(request):
 
     if request.method == 'POST':
         action = request.POST.get('action')
-        
         machine_book =  existing_booking.machine
         slot_book = existing_booking.slot
 
         if action == 'book':
             selected_machine = Machine.objects.filter(name = request.POST.get('machine')).first()
+            
             selected_slot = request.POST.get('slot')
-        
-            if existing_booking:
+
+            if slot_book and machine_book:
                 selected_machine.booked_slot(int(selected_slot))
                 selected_machine.booked_slot(int(slot_book))
                 existing_booking.machine = selected_machine
                 existing_booking.slot = selected_slot
                 existing_booking.save()
 
-            else:
+            elif existing_booking:
+                booking = Booking(neighbor=request.user, machine=selected_machine, slot = int(selected_slot))
+                booking.save()
+                existing_booking.machine = selected_machine
+                existing_booking.slot = selected_slot
+                existing_booking.save()
+            
+            if not existing_booking:
                 booking = Booking(neighbor=request.user, machine=selected_machine, slot = int(selected_slot))
                 booking.save()
         
@@ -40,21 +47,33 @@ def booking(request):
             print('edit')
         
         if action == 'cancel':
-            machine_book.booked_slot(int(slot_book))
-            existing_booking.slot = None
-            existing_booking.machine = None
-            existing_booking.save()
-
+            print('cancel')
+            print(machine_book)
+            print(slot_book)
+            
+            if slot_book and machine_book:
+                print('cancel')
+                print(machine_book)
+                print(slot_book)
+                machine_book.booked_slot(int(slot_book))
+                existing_booking.slot = None
+                existing_booking.machine = None
+                existing_booking.save()
+        
         if action == 'logout':
             return neighbor_logout(request)    
         
     return render(request, 'booking/booking.html', context)
 
-def get_available_slots(request, machine_id):
+def get_available_slots(request, machineID):
+    print('get_available_slots')
+    print(machineID)
     try:
-        machine = Machine.objects.get(name=machine_id)
+        machine = Machine.objects.get(id=machineID)
         slot_available = machine.get_slot_status()
+        print(slot_available)
         return JsonResponse({'slot_available': slot_available})
     
     except Machine.DoesNotExist:
+        print('Machine.DoesNotExist')
         return JsonResponse({'error': 'Machine not found'})

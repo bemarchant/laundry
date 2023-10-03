@@ -1,13 +1,16 @@
 from django.conf import settings
-from django.db import models
+from django.db import models 
+from login.models import Neighbor
 from utils import constants
-        
+import uuid
+
+
 class Machine(models.Model):
-    name = models.CharField(max_length=1)
-    slots = models.JSONField(default=constants.default_slot_status)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.name
+        return f'id: {self.id}\nname : {self.name}\nslots : {self.slots}'
 
     def get_slot_status(self):
         slot_available = []
@@ -21,7 +24,6 @@ class Machine(models.Model):
             self.slots[slot_pos] = False
             self.save()
             return
-        
         print(f'unbooked_slot : {slot_pos}')
 
         self.slots[slot_pos] = True
@@ -29,7 +31,8 @@ class Machine(models.Model):
         return
 
 class Booking(models.Model):
-    neighbor = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    neighbor = models.ForeignKey(Neighbor, on_delete=models.CASCADE)
     machine = models.ForeignKey(Machine, on_delete=models.CASCADE, null=True, blank=True)
     slot = models.IntegerField(null=True, blank=True)
 
@@ -41,3 +44,5 @@ class Booking(models.Model):
 
     class Meta:
         unique_together = ('neighbor', 'machine', 'slot')
+
+

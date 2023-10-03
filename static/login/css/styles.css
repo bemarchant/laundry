@@ -26,8 +26,9 @@ body {
 }
 
 .main-section-container {
-    width: 50%;
+    width: 80%;
     align-items : center;
+
 }
 
 .form-container {
@@ -67,7 +68,6 @@ body {
 
 .username-input {
     border: 1px solid #ccc;
-    padding: 15px;
-    background-color: red;
-
+    padding: 5px;
+    background: #262626ff;
 }

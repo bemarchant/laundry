@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var slotOptions = data.slot_available;
         for (var i = 0; i < slotOptions.length; i++) {
           var option = document.createElement("option");
+          option.value = slotOptions[i];
           option.text = slotOptions[i];
           slotSelect.appendChild(option);
         }

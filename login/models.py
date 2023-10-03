@@ -1,34 +1,34 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-import random
-import string
+from django.contrib.auth.models import AbstractUser, Permission
+from django.contrib.contenttypes.models import ContentType
+import uuid
+
+class Neighborhood(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255, default="")
+
+    def __str__(self):
+        return "Neighborhood"
 
 class Apartment(models.Model):
-    apartment_id = models.AutoField(primary_key=True)
-    number = models.CharField(max_length=20)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    number = models.IntegerField()    
+    neighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.number
-    
+
 class Neighbor(AbstractUser):
-    neighbor_id = models.CharField(max_length=8, unique=True, primary_key=True)
-    name = models.CharField(max_length=100, default='Benja Marchant')
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, blank=True, null=True)
     age = models.IntegerField(default=30)
     gender = models.CharField(max_length=1, default="O", choices=[('M', 'Hombre'), ('F', 'Mujer'), ('O', 'Otro')])
-    apartment = models.CharField(max_length=100, default='802')
     phone = models.CharField(max_length=14, default='(+56)9XXXXXXXX')
 
-    def generate_neighbor_id(self):
-        return ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
-
-    def save(self, *args, **kwargs):
-        if not self.neighbor_id:
-            self.neighbor_id = self.generate_neighbor_id()
-
-        super().save(*args, **kwargs)
-
-class Neighborhood(models.Model):
-    neighbors = models.ManyToManyField(Neighbor)
-    
     def __str__(self):
-        return "Neighborhood"
+        return self.id
+
+class SuperNeighbor(Neighbor):
+    class Meta:
+        proxy = True
+

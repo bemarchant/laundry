@@ -35,15 +35,15 @@
         <form method="post">
           {% csrf_token %}
           <div class="form-container">
-              <label class='form-text'>MÁQUINA : {{ booking.machine.name }}</label>
+              <label class='form-text'>MÁQUINA : {{ booking.machine.id }}</label>
               <label class='form-text'>BLOQUE : {{booking.slot}}</label>
           </div>
   
+          <div class="form-row">
+            <button type="submit" name="action" value="cancel" class="button-edit">CANCELAR</button>
+          </div>
         </form>
-        
-        <div class="form-row">
-          <button type="submit" name="action" value="cancel"class="button-edit">CANCELAR</button>
-        </div>
+      
   
       </div>
   
