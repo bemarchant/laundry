@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_protect
 from .forms import NeighborSignupForm, NeighborLoginForm
-
+from django.contrib.auth.decorators import user_passes_test
 
 @csrf_protect
 
@@ -50,3 +50,11 @@ def neighbor_signup(request):
 
 def neighbor_welcome(request):
     return render(request, 'login/welcome.html')
+
+def is_super_neighbor(user):
+    return user.groups.filter(name='Super Neighbor').exists()
+
+@user_passes_test(is_super_neighbor)
+def manage_apartments(request):
+    # Your view logic for managing apartments here
+    return

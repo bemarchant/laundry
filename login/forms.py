@@ -28,6 +28,5 @@ class NeighborLoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'username-input'}))
     password = forms.CharField(widget=forms.PasswordInput)
     
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
