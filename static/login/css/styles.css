@@ -66,9 +66,18 @@ body {
     color: #262626ff;
 }
 
-
 .username-input {
     border: 1px solid #ccc;
     padding: 5px;
     background: #262626ff;
+}
+
+.button-edit:hover + .form-container .form-row label {
+    background-color: white;
+    color: #262626ff;
+}
+
+.hovered {
+    background-color: white;
+    color: #262626ff;
 }

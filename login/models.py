@@ -34,6 +34,16 @@ class Neighbor(AbstractUser):
             return self.phone
         else: 
             return 'no phone'
+    
+    def delete(self, *args, **kwargs):
+        print('delete')
+        superneighbor = SuperNeighbor.objects.first()
+        if not superneighbor:
+            return super().delete(*args, **kwargs)
+        if self == superneighbor.user:
+            return
+        else:
+            return super().delete(*args, **kwargs)
 
 class SuperNeighbor(models.Model):
 
@@ -42,23 +52,42 @@ class SuperNeighbor(models.Model):
     def save(self, *args, **kwargs):     
         super_neighbor_group, created = Group.objects.get_or_create(name='allow_superneighbor')
         superneighbor = SuperNeighbor.objects.first()
-        
-        if not superneighbor.user:
+
+        if not superneighbor:
+            print(' if not superneighbor')
             self.user.groups.add(super_neighbor_group)
+            superneighbor = SuperNeighbor()
             superneighbor.user = self.user
+            superneighbor.user.is_staff = True
+            superneighbor.user.is_superuser = True
+
             super().save(*args, **kwargs)
             return
         
         if self.user == superneighbor.user:
+            print('self.user == superneighbor.user')
+
             return
         
         if self.user != superneighbor.user:
+            print( "self.user != superneighbor.user")
+            superneighbor.user.is_staff = False
+            superneighbor.user.is_superuser = False
             superneighbor.user.groups.remove(super_neighbor_group)
-            self.user.groups.add(super_neighbor_group)
             superneighbor.user = self.user
+            superneighbor.user.groups.add(super_neighbor_group)
+            superneighbor.user.is_staff = True
+            superneighbor.user.is_superuser = True
+            
             super().save(*args, **kwargs)
             return
 
     def __str__(self):
         return f'SuperNeighbor: {self.user}'
 
+
+# permission = Permission.objects.create(
+#     codename='can_do_superneighbor',
+#     name='Can do Super',
+#     content_type=ContentType.objects.get_for_model(SuperNeighbor),
+# )
