@@ -1,13 +1,11 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-  <head>
-      <title>👋🏽 welcome</title>
-      <link rel="stylesheet" type="text/css" href="{% static 'login/css/styles.css' %}">
-      <script src="{% static 'booking/script.js' %}"></script>
-  </head>
 
-  <body>
+
+{% extends "base.html" %}
+
+{% block title %}login{% endblock %}
+
+{% block content %}
+
     <div class="flex-container">
 
       <div class="main-section-container">
@@ -90,6 +88,4 @@
         </form>
       </div>
     </div>
-  </body>
-  
-</html>
+    {% endblock %}
