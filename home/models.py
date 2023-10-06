@@ -12,7 +12,7 @@ class Neighborhood(models.Model):
     name = models.CharField(max_length=255, default="")
 
     def __str__(self):
-        return "Neighborhood"
+        return f'{self.id} - {self.name}'
 
 class Apartment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -23,6 +23,7 @@ class Apartment(models.Model):
         return self.number
 
 class Neighbor(AbstractUser):
+    print('Neighbor')
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, blank=True, null=True)
     age = models.IntegerField(default=30)
@@ -30,10 +31,7 @@ class Neighbor(AbstractUser):
     phone = models.CharField(max_length=14, default='(+56)9XXXXXXXX')
     
     def __str__(self):
-        if self.phone:
-            return self.phone
-        else: 
-            return 'no phone'
+        return f'{self.id} - {self.apartment}'
     
     def delete(self, *args, **kwargs):
         print('delete')
@@ -46,9 +44,12 @@ class Neighbor(AbstractUser):
             return super().delete(*args, **kwargs)
 
 class SuperNeighbor(models.Model):
-
+    print('SuperNeighbor')
     user = models.OneToOneField(Neighbor, on_delete=models.CASCADE, related_name='superneighbor', null=True, blank=True)
 
+    def __str__(self):
+        return f'SuperNeighbor: {self.user}'
+    
     def save(self, *args, **kwargs):     
         super_neighbor_group, created = Group.objects.get_or_create(name='allow_superneighbor')
         superneighbor = SuperNeighbor.objects.first()
@@ -81,10 +82,6 @@ class SuperNeighbor(models.Model):
             
             super().save(*args, **kwargs)
             return
-
-    def __str__(self):
-        return f'SuperNeighbor: {self.user}'
-
 
 # permission = Permission.objects.create(
 #     codename='can_do_superneighbor',

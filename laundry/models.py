@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import models 
-from login.models import Neighbor
-from utils import constants
+from home.models import Neighbor
 import uuid
 
 

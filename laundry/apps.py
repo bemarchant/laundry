@@ -1,7 +1,6 @@
 from django.apps import AppConfig
 
 
-class LoginConfig(AppConfig):
+class LaundryConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'login'
-    verbose_name = 'Neighbors'
+    name = 'laundry'

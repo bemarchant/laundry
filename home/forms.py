@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import password_validation
 
 class NeighborSignupForm(UserCreationForm):
+    print('NeighborSignupForm')
     class Meta:
         model = Neighbor
         fields = ['age', 'username','first_name','last_name','gender', 'apartment', 'phone', 'email']
@@ -25,6 +26,8 @@ class NeighborSignupForm(UserCreationForm):
     
 
 class NeighborLoginForm(forms.Form):
+    print('NeighborLoginForm')
+
     # username = forms.CharField(widget=forms.TextInput(attrs={'class': 'username-input'}))
     username = forms.CharField(widget=forms.TextInput)
     password = forms.CharField(widget=forms.PasswordInput)

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_protect
 from .forms import NeighborSignupForm, NeighborLoginForm
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 
 @csrf_protect
@@ -24,7 +24,7 @@ def neighbor_login(request):
     else:
         form = NeighborLoginForm()
 
-    return render(request, 'login/login.html', {'form': form})
+    return render(request, 'login.html', {'form': form})
 
 def neighbor_logout(request):
     logout(request)
@@ -44,14 +44,15 @@ def neighbor_signup(request):
         else:
             print('errors')
             print(form.errors)
-            return render(request, 'login/signup.html', {'form': form})
+            return render(request, 'signup.html', {'form': form})
     else:
         form = NeighborSignupForm()
 
-    return render(request, 'login/signup.html', {'form': form})
+    return render(request, 'signup.html', {'form': form})
 
+@login_required
 def neighbor_welcome(request):
-    return render(request, 'login/welcome.html')
+    return render(request, 'welcome.html')
 
 def is_super_neighbor(user):
     return user.groups.filter(name='Super Neighbor').exists()

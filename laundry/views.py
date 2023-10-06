@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from login.views import neighbor_logout
+from django.contrib.auth.decorators import login_required
+from home.views import neighbor_logout
 from .models import Machine, Booking
 from datetime import date
 
@@ -8,6 +9,7 @@ def booking_status(request):
     today = date.today()
     pass
 
+@login_required
 def booking(request):
     machine = Machine.objects.all()
     neighbor = request.user
@@ -63,8 +65,9 @@ def booking(request):
         if action == 'logout':
             return neighbor_logout(request)    
         
-    return render(request, 'booking/booking.html', context)
+    return render(request, 'booking.html', context)
 
+@login_required
 def get_available_slots(request, machineID):
     print('get_available_slots')
     print(machineID)
