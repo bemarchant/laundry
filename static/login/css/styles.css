@@ -50,7 +50,7 @@ body {
 
 .button-edit {
     background-color: #666666ff;
-    box-shadow: 3px 3px 25.6px rgba(0, 0, 0, 0.2);
+    box-shadow: 4px 4px 1px #262626ff;
     font-family: monospace;
     font-weight: bold;
     color: white; 
@@ -62,9 +62,10 @@ body {
 
 .button-edit:hover {
     background-color: white;
-    box-shadow: 4px 4px 30.4px rgba(0, 0, 0, 1.0);
+    box-shadow: 4px 4px 4px #666666ff;
     color: #262626ff;
 }
+
 
 .username-input {
     border: 1px solid #ccc;
