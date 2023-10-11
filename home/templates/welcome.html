@@ -1,13 +1,13 @@
 {% extends "base.html" %}
-
-{% block title %}login{% endblock %}
-
+{% load static %}
+{% block title %}welcome{% endblock %}
 {% block content %}
-    <h2>👋🏽 Bienvenido </h2>
+
+<h2>👋🏽 Bienvenido </h2>
     
     <form method="post" action="{% url 'neighbor_login' %}">
         {% csrf_token %}
         <button type="submit">salir</button>
     </form>
-    <a href="{% url 'booking' %}" class="btn btn-primary">Agendar</a>
+    <a href="{% url 'neighbor_booking' %}" class="btn btn-primary">Agendar</a>
     {% endblock %}
