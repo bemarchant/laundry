@@ -5,10 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}title{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'login/css/styles.css' %}">
-    <script src="{% static 'login/script.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
-
 </head>
 <body>
     <header>
@@ -20,8 +18,6 @@
     <main>
         <!-- Content from child templates will be inserted here -->
         {% block content %}
-
-        
         {% endblock %}
     </main>
     

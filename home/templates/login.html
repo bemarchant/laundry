@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static%}
+{% block name %}login{% endblock %}
+{% block content %}
+
+<h2>👋🏽 Hola vecin@</h2>
+    
+<form method="post">
+    {% csrf_token %}
+    <div class="form-container">
+        <label for="usernameLabel" id="usernameLabel">{{ "👤 usuario" }}</label>{{ form.username }}
+        <label for="passwordLabel" id="passwordLabel">{{ "🔑 contraseña" }}</label>{{ form.password }}
+    </div>
+    
+    <div class="form-row">
+        <button type="submit" name="action" value="cancel" class="button-edit">OK</button>
+    </div>
+</form>
+{% endblock %}
