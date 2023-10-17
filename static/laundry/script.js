@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  function getDayBlock() {
+  function fillDayBlock() {
     const selectedHour = parseInt(hourOption.value, 10);
     if (selectedHour < 12) {
       dayBlock.textContent = "AM";
@@ -42,5 +42,5 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
   machineSelect.addEventListener("change", populateMachineAvailability);
-  hourOption.addEventListener("change", getDayBlock);
+  hourOption.addEventListener("change", fillDayBlock);
 });
