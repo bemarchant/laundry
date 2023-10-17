@@ -3,7 +3,8 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from home.views import neighbor_logout
 from .models import Machine, Booking
-from datetime import date
+from datetime import datetime, timedelta, date
+from django.utils import timezone
 
 def booking_status(request):
     today = date.today()
@@ -13,19 +14,23 @@ def booking_status(request):
 
 def booking(request):
     
-    machine = Machine.objects.all()
+    machines = Machine.objects.all()
     neighbor = request.user
     existing_booking = Booking.objects.filter(neighbor=neighbor).first()
-    
-    context = {'machine': machine, 'neighbor' : neighbor, 'booking' : existing_booking}
 
+    current_time = datetime.now()
+    time_options = []
+
+    context = {'machines': machines,
+            'neighbor' : neighbor}
+    
     if request.method == 'POST':
         action = request.POST.get('action')
-        machine_book =  existing_booking.machine
-        slot_book = existing_booking.slot
 
         if action == 'book':
-            selected_machine = Machine.objects.filter(name = request.POST.get('machine')).first()
+            # machine_book =  existing_booking.machine
+            # slot_book = existing_booking.slot
+            selected_machine = Machine.objects.filter(name = request.POST.get('machine')).first()   
             selected_slot = request.POST.get('slot')
 
     #         if slot_book and machine_book:
@@ -69,16 +74,9 @@ def booking(request):
     return render(request, 'booking.html', context)
 
 @login_required
-def get_available_slots(request, machineID):
-    # print('get_available_slots')
-    # print(machineID)
-    # try:
-    #     machine = Machine.objects.get(id=machineID)
-    #     slot_available = machine.get_slot_status()
-    #     print(slot_available)
-    #     return JsonResponse({'slot_available': slot_available})
-    
-    # except Machine.DoesNotExist:
-    #     print('Machine.DoesNotExist')
-    #     return JsonResponse({'error': 'Machine not found'})
-    return
+
+def get_machine_availability(request, machine_id):
+    machine = Machine.objects.get(id=machine_id)
+    available_slots = machine.slot_available()
+
+    return JsonResponse({'slot_available': available_slots})

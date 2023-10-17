@@ -1,98 +1,118 @@
-{% extends "base.html" %}
-{% load static%}
-{% block title %}booking{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% load static%} {% block title %}booking{% endblock
+%} {% block content %}
 
-    <div class="flex-container">
+<head>
+  <script src="{% static 'laundry/script.js' %}"></script>
+</head>
 
-      <div class="main-section-container">
-  
-        <h2 class="main-header">👋🏽 Bienvenido </h2>
-  
-        <form method="post">
-          {% csrf_token %}
-          <div class="form-container">
-            <label class='form-text'>{{neighbor.name}}</label>
-            <label class='form-text'>{{neighbor.apartment}}</label>
-            <label class='form-text'>{{neighbor.email}}</label>
-            <label class='form-text'>{{neighbor.phone}}</label>
-          </div>
-        </form>
-      
+<div class="flex-container">
+  <div class="main-section-container">
+    <h2 class="main-header">👋🏽 Bienvenido</h2>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-container">
+        <label class="form-text">{{neighbor.name}}</label>
+        <label class="form-text">{{neighbor.apartment}}</label>
+        <label class="form-text">{{neighbor.email}}</label>
+        <label class="form-text">{{neighbor.phone}}</label>
+      </div>
+    </form>
+
+    <div class="form-row">
+      <button type="submit" name="action" value="edit" class="button-edit">
+        EDITAR ✏️
+      </button>
+    </div>
+  </div>
+
+  <div class="main-section-container">
+    <h2 class="main-header">📝 Tus reservas</h2>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-container">
+        <!-- <label class='form-text'>MÁQUINA : {{ booking.machine.id }}</label>
+<label class='form-text'>BLOQUE : {{booking.slot}}</label> -->
+      </div>
+
+      <div class="form-row">
+        <button type="submit" name="action" value="cancel" class="button-edit">
+          CANCELAR 🗑️
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="main-section-container">
+    <h2 class="main-header">🤖 Agenda una máquina</h2>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-container">
         <div class="form-row">
-          <button type="submit" name="action" value="edit" class="button-edit"> EDITAR ✏️</button>
+          <label class="form-text" for="slot">Máquina:</label>
+          <select name="machine" id="machine" required>
+            {% for m in machines %}
+            <option value="{{ m.name }}" data-machine-id="{{ m.id }}">
+              {{ m.name }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label class="form-text" for="slotOptions">Horario:</label>
+          <select id="hourSelect" name="hour">
+            <option value="00">00</option>
+            <option value="01">01</option>
+          </select>
+          <label>:</label>
+          <select id="quarterSelect" name="minute">
+            <option value="00">00</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
+          </select>
+          <label id="dayBlockLabel">AM</label>
+        </div>
+
+        <div class="form-row">
+          <label class="form-text" for="duration">Tiempo:</label>
+          <select name="duration" id="duration" required>
+            <option value="15">15 minutos</option>
+            <option value="30">30 minutos</option>
+            <option value="45">45 minutos</option>
+            <option value="60">60 minutos</option>
+          </select>
         </div>
       </div>
-  
-      <div class="main-section-container">
-        <h2 class="main-header">📝 Tus reservas </h2>
-  
-        <form method="post">
-          {% csrf_token %}
-          <div class="form-container">
-              <!-- <label class='form-text'>MÁQUINA : {{ booking.machine.id }}</label>
-              <label class='form-text'>BLOQUE : {{booking.slot}}</label> -->
-          </div>
-  
-          <div class="form-row">
-            <button type="submit" name="action" value="cancel" class="button-edit"> CANCELAR 🗑️</button>
-          </div>
-        </form>
-      
-  
-      </div>
-  
-      <div class="main-section-container">
-        <h2 class="main-header">🤖 Agenda una máquina</h2>
-  
-        <form method="post">
-          {% csrf_token %}
-          <div class="form-container">    
-            <div class="form-row">
-              <label class='form-text' for="slot">Qué máquina?:</label>
-              <select name="machine" id="machine" required>
-                {% for m  in machine%}<option>{{ m }}</option>{% endfor %}
-              </select>
-            </div>
 
-            <div class="form-row">
-              <label class='form-text' for="start_time">Horario:</label>
-              <select name="start_time" id="start_time" required> <!-- JavaScript --> </select>
-            </div>
+      <div class="form-row">
+        <button type="submit" name="action" value="book" class="button-edit">
+          AGENDAR 🗓️
+        </button>
+      </div>
+    </form>
+  </div>
 
-            <div class="form-row">
-              <label class='form-text' for="duration">Tiempo:</label>
-              <select name="duration" id="duration" required>
-                <option value="15">15 minutos</option>
-                <option value="30">30 minutos</option>
-                <option value="45">45 minutos</option>
-                <option value="60">60 minutos</option>
-            </select>
-            </div>
-          </div>
-  
-          <div class="form-row">
-            <button type="submit" name="action" value="book" class="button-edit">AGENDAR 🗓️</button>
-          </div>
-        </form>
+  <div class="main-section-container">
+    <h2 class="main-header">⚠️ Reporta un problema</h2>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-container"></div>
+    </form>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="form-row">
+        <button type="submit" name="action" value="logout" class="button-edit">
+          SALIR ‍💨
+        </button>
       </div>
-  
-      <div class="main-section-container">
-        <h2 class="main-header">⚠️ Reporta un problema </h2>
-  
-        <form method="post">
-          {% csrf_token %}
-          <div class="form-container">
-          </div>
-        </form>
-  
-        <form method="post">
-          {% csrf_token %}
-  
-          <div class="form-row">
-            <button type="submit" name="action" value="logout" class="button-edit">SALIR ‍💨</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    {% endblock %}
+    </form>
+  </div>
+</div>
+{% endblock %}

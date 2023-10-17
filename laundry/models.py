@@ -10,10 +10,23 @@ from django.utils import timezone
 class Machine(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
+    daily_slots = [(hour, 15*quarter) for hour in range(24) for quarter in [0, 1, 2, 3]]
 
     def __str__(self):
         return f'id: {self.id}\nname : {self.name}'
+    
+    def slot_available(self):
+        slots = [(hour, 15*quarter) for hour in range(24) for quarter in [0, 1, 2, 3]]
+        ##check which slot are unavailable by looking the bookings
+        return slots
+    
+    def update_slots(self):
+        return
 
+    def reset_slots(self):
+        self.daily_slots = [(hour, 15*quarter) for hour in range(24) for quarter in [0, 1, 2, 3]]
+        return
+ 
 
 class Booking(models.Model):
     DURATION_CHOICES = (
